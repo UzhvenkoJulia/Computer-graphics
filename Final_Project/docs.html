@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документація Коду | Final_Project_3D</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: #cccccc;
+            display: flex;
+        }
+
+        /* Бокове меню навігації */
+        .sidebar {
+            width: 250px;
+            background-color: #252526;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            border-right: 1px solid #333;
+        }
+
+        .sidebar h2 {
+            color: #4ec9b0;
+            text-align: center;
+            font-size: 18px;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+            margin: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #d4d4d4;
+            padding: 15px 20px;
+            text-decoration: none;
+            border-bottom: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #37373d;
+            color: #569cd6;
+        }
+
+        /* Основний контент */
+        .content {
+            margin-left: 250px;
+            padding: 40px;
+            max-width: 900px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #569cd6;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #4ec9b0;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: #dcdcaa;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        /* Таблиці для пояснення символів */
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            background-color: #2d2d30;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .symbol-table th,
+        .symbol-table td {
+            border: 1px solid #3f3f46;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .symbol-table th {
+            background-color: #007acc;
+            color: white;
+        }
+
+        .symbol-table td:first-child {
+            font-family: monospace;
+            color: #9cdcfe;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .code-snippet {
+            background-color: #000000;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #ce9178;
+            overflow-x: auto;
+            border-left: 3px solid #569cd6;
+        }
+
+        .keyword {
+            color: #569cd6;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>📚 Бібліотека Проєкту</h2>
+        <a href="#intro">Вступ</a>
+        <a href="#main-cpp">Файл: main.cpp</a>
+        <a href="#math">Математика Камери</a>
+        <a href="#shaders">Шейдери (Blinn-Phong)</a>
+        <a href="#cmake">Файл: CMakeLists.txt</a>
+    </div>
+
+    <div class="content">
+        <h1 id="intro">Офіційна документація коду</h1>
+        <p>Цей документ містить детальний розбір кожного символу, функції та математичної формули, використаної у рушії
+            <strong>Final_Project_3D</strong>. Довідник створено для захисту екзаменаційного проєкту.
+        </p>
+
+        <h2 id="main-cpp">📄 Розбір файлу: <code>main.cpp</code></h2>
+        <p>Головний файл програми. Відповідає за зв'язок між процесором, оперативною пам'яттю та відеокартою.</p>
+
+        <h3>Глобальні змінні та константи</h3>
+        <table class="symbol-table">
+            <tr>
+                <th>Символ / Змінна</th>
+                <th>Тип даних</th>
+                <th>Детальне пояснення</th>
+            </tr>
+            <tr>
+                <td>SCR_WIDTH / SCR_HEIGHT</td>
+                <td>unsigned int</td>
+                <td>Константи (800 і 600), що жорстко задають початковий розмір вікна програми у пікселях.</td>
+            </tr>
+            <tr>
+                <td>cameraPos</td>
+                <td>glm::vec3</td>
+                <td>Вектор із 3 чисел (X,Y,Z). Задає фізичну точку у 3D-просторі, де знаходяться "очі" глядача.</td>
+            </tr>
+            <tr>
+                <td>deltaTime</td>
+                <td>float</td>
+                <td>Різниця в часі між поточним та попереднім кадром. Використовується як множник швидкості, щоб рух був
+                    плавним на будь-яких комп'ютерах.</td>
+            </tr>
+            <tr>
+                <td>VAO, VBO, EBO</td>
+                <td>unsigned int</td>
+                <td>Унікальні ідентифікатори (номери) буферів у пам'яті відеокарти. VBO зберігає координати, EBO —
+                    порядок їх з'єднання, VAO — запам'ятовує налаштування.</td>
+            </tr>
+        </table>
+
+        <h2 id="math">📐 Математика Fly-Камери</h2>
+        <p>Функція <code>mouse_callback</code> розраховує напрямок погляду за допомогою сферичних координат (кутів
+            Ейлера).</p>
+
+        <div class="code-snippet">
+            <span class="type">glm::vec3</span> front;<br>
+            front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));<br>
+            front.y = sin(glm::radians(pitch));<br>
+            front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        </div>
+
+        <table class="symbol-table">
+            <tr>
+                <th>Символ / Змінна</th>
+                <th>Детальне пояснення</th>
+            </tr>
+            <tr>
+                <td>yaw</td>
+                <td>Кут нишпорення (рух голови вліво-вправо). Початкове значення -90.0f спрямовує камеру вздовж осі Z у
+                    глибину екрана.</td>
+            </tr>
+            <tr>
+                <td>pitch</td>
+                <td>Кут тангажу (нахил голови вгору-вниз). Обмежений діапазоном [-89; 89], щоб уникнути математичної
+                    помилки Gimbal Lock.</td>
+            </tr>
+            <tr>
+                <td>glm::radians()</td>
+                <td>Функція, що переводить градуси у радіани (оскільки тригонометричні функції C++ працюють виключно з
+                    радіанами).</td>
+            </tr>
+        </table>
+
+        <h2 id="shaders">💡 Шейдери: Модель Блінна-Фонга</h2>
+        <p>Математична фізика світла розраховується для кожного пікселя екрана у файлі <code>fragment.glsl</code>.</p>
+
+        <table class="symbol-table">
+            <tr>
+                <th>Формула / Символ</th>
+                <th>Значення у комп'ютерній графіці</th>
+            </tr>
+            <tr>
+                <td>dot(norm, lightDir)</td>
+                <td>Скалярний добуток вектора нормалі та напрямку світла. Визначає розсіяне освітлення (Diffuse). Чим
+                    ближче кут до 0 (світло падає прямо), тим ближче результат до 1 (максимальна яскравість).</td>
+            </tr>
+            <tr>
+                <td>halfwayDir</td>
+                <td>Половинний вектор (нормалізована сума вектора світла та вектора погляду камери). Це головна
+                    відмінність моделі Блінна-Фонга від звичайного Фонга.</td>
+            </tr>
+            <tr>
+                <td>pow(..., shininess)</td>
+                <td>Піднесення до степеня. Візуально звужує та робить більш різким дзеркальний відблиск (Specular) на
+                    золотій поверхні.</td>
+            </tr>
+            <tr>
+                <td>attenuation</td>
+                <td>Формула 1.0 / (K_c + K_l * d + K_q * d^2). Відповідає за фізично коректне затухання світла зі
+                    збільшенням відстані (d) до джерела.</td>
+            </tr>
+        </table>
+
+        <h2 id="cmake">⚙️ Збірка: <code>CMakeLists.txt</code></h2>
+        <p>Налаштування для компілятора MinGW.</p>
+        <table class="symbol-table">
+            <tr>
+                <th>Команда CMake</th>
+                <th>Дія компілятора</th>
+            </tr>
+            <tr>
+                <td>add_subdirectory()</td>
+                <td>Наказує компілятору зайти у вказану папку (наприклад, GLFW) і скомпілювати її вихідний код
+                    спеціально для нашого проєкту.</td>
+            </tr>
+            <tr>
+                <td>target_include_directories</td>
+                <td>Вказує компілятору шляхи, де слід шукати заголовні файли (.h та .hpp) при зустрічі директиви
+                    #include.</td>
+            </tr>
+            <tr>
+                <td>target_link_libraries</td>
+                <td>Фінальний етап (Лінкування). Зшиває наш скомпільований код (MyApp.exe) із бінарними файлами
+                    бібліотек OpenGL, GLFW та GLAD.</td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

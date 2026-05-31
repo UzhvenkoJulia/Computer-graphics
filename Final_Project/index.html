@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Екзаменаційний проєкт | 3D Графіка</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #252526;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #569cd6;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: #4ec9b0;
+            margin-top: 30px;
+        }
+
+        p,
+        li {
+            font-size: 16px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .highlight {
+            color: #ce9178;
+            background-color: #1e1e1e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .controls-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .controls-table th,
+        .controls-table td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .controls-table th {
+            background-color: #333;
+            color: #dcdcaa;
+        }
+
+        .code-block {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #569cd6;
+            font-family: monospace;
+            overflow-x: auto;
+            color: #d4d4d4;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #555;
+            text-align: center;
+            font-style: italic;
+            color: #9cdcfe;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🎨 Екзаменаційний проєкт з Комп'ютерної графіки</h1>
+        <p><strong>Тема:</strong> Власний 3D-рушій на OpenGL (Модель освітлення Blinn-Phong, Fly-камера, завантаження
+            .obj моделей).</p>
+
+        <h2>⚙️ Що реалізовано у проєкті</h2>
+        <ul>
+            <li><strong>Сучасний OpenGL (Core Profile 3.3):</strong> Використання шейдерів для програмування логіки
+                відеокарти.</li>
+            <li><strong>Модель освітлення Blinn-Phong:</strong> Розрахунок фонового (Ambient), розсіяного (Diffuse) та
+                дзеркального (Specular) світла. Налаштовано фізичні параметри матеріалу "Золото".</li>
+            <li><strong>Інтерактивна Fly-камера:</strong> Повноцінне переміщення у 3D-просторі з використанням векторної
+                алгебри (матриці LookAt, розрахунок кутів Ейлера).</li>
+            <li><strong>Завантаження зовнішніх моделей:</strong> Читання файлів формату <code>.obj</code> за допомогою
+                бібліотеки <code>tinyobjloader</code> та пакування геометрії у буфери VBO/EBO.</li>
+            <li><strong>Затухання світла (Attenuation):</strong> Реалістичне розсіювання світла від точкового джерела
+                (Point Light) залежно від відстані до об'єкта.</li>
+        </ul>
+
+        <h2>🎮 Керування</h2>
+        <table class="controls-table">
+            <tr>
+                <th>Дія</th>
+                <th>Клавіша / Миша</th>
+            </tr>
+            <tr>
+                <td>Озирнутися навколо</td>
+                <td><strong>Рух мишкою</strong></td>
+            </tr>
+            <tr>
+                <td>Рух вперед / назад</td>
+                <td><strong>W</strong> / <strong>S</strong></td>
+            </tr>
+            <tr>
+                <td>Крок вліво / вправо</td>
+                <td><strong>A</strong> / <strong>D</strong></td>
+            </tr>
+            <tr>
+                <td>Закрити програму</td>
+                <td><strong>ESC</strong></td>
+            </tr>
+        </table>
+
+        <h2>🚀 Інструкція із запуску (CMake)</h2>
+        <p>Проєкт використовує систему збірки CMake. Щоб зібрати та запустити програму, відкрийте термінал у головній
+            папці проєкту та виконайте наступні команди:</p>
+        <div class="code-block">
+            cd build<br>
+            cmake -G "MinGW Makefiles" ..<br>
+            cmake --build .<br>
+            cd ..<br>
+            .\build\Final_Project_3D.exe
+        </div>
+
+        <div class="footer">
+            <h2>🎓 Від автора</h2>
+            <p>Як студентці освітньої програми «Комп'ютерна математика», мені було надзвичайно цікаво побачити, як
+                лінійна алгебра, вектори та матриці, які ми вивчаємо в теорії, оживають на екрані та створюють
+                реалістичну 3D-графіку.</p>
+            <p>Величезне дякую за цей курс! Він був складним, але неймовірно захопливим та корисним. ❤️</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
